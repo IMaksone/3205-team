@@ -1,1 +1,1 @@
-export { currencySlice } from "./currencySlice.js"
+export { currencySlice } from "./currencySlice.js";

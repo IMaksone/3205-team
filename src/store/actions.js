@@ -1,1 +1,4 @@
-export { exchangeRatesUpdate, changeDefaultCurrencies } from './slices/currencySlice'
+export {
+  exchangeRatesUpdate,
+  changeDefaultCurrencies
+} from "./slices/currencySlice";

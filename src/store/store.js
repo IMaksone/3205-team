@@ -4,6 +4,6 @@ import { currencySlice } from "./slices";
 
 export default configureStore({
   reducer: {
-    currency: currencySlice.reducer,
-  },
+    currency: currencySlice.reducer
+  }
 });

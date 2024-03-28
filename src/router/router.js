@@ -6,12 +6,12 @@ import { CurrencyExchange, ExchangeRates } from "../pages";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <CurrencyExchange />,
+    element: <CurrencyExchange />
   },
   {
     path: "exchange-rates",
-    element: <ExchangeRates />,
-  },
+    element: <ExchangeRates />
+  }
 ]);
 
 export default router;

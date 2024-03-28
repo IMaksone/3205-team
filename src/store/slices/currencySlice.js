@@ -6,12 +6,12 @@ export const currencySlice = createSlice({
     defaultCurrencies: "RUB",
     rates: {
       USD: {
-        RUB: 0,
+        RUB: 0
       },
       RUB: {
-        USD: 0,
-      },
-    },
+        USD: 0
+      }
+    }
   },
   reducers: {
     exchangeRatesUpdate: (state, action) => {
@@ -19,8 +19,8 @@ export const currencySlice = createSlice({
     },
     changeDefaultCurrencies: (state, action) => {
       state.defaultCurrencies = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const { exchangeRatesUpdate, changeDefaultCurrencies } =

@@ -17,7 +17,8 @@ code {
   text-align: center;
 }
 
-.currency-exchange, .exchange-rates {
+.currency-exchange,
+.exchange-rates {
   margin-top: 30vh;
 }
 
@@ -25,4 +26,3 @@ code {
   font-size: 12px;
   color: red;
 }
-
