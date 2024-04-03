@@ -8,10 +8,10 @@ import router from "./router";
 import store from "./store";
 import { useCurencyRates } from "./store/useSelector/useCurency";
 import { useDispatchExchangeRates } from "./store/useDispatch/useCurrencyDispatch";
-
-import "./index.css";
 import { apiGetRates } from "./api";
 import useAsyncEffect from "./hooks/useAsyncEffect";
+
+import "./index.css";
 
 const rootEl = document.getElementById("root");
 

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-const ExchangeRates = ({ rates }) => {
+import useCurencyRates from "src/store/useSelector/useCurency";
+
+const ExchangeRates = () => {
+  const rates = useCurencyRates();
+
   const currenciesNames = Object.keys(rates);
   const [mainCurrency, setMainCurrency] = useState(currenciesNames[0]);
 
@@ -24,7 +27,7 @@ const ExchangeRates = ({ rates }) => {
 
   const renderButtons = (
     <div className="buttons">
-      {[...currenciesNames].map((el) => (
+      {currenciesNames.map((el) => (
         <button
           key={el}
           disabled={mainCurrency === el}
@@ -38,7 +41,7 @@ const ExchangeRates = ({ rates }) => {
 
   const renderRates = (
     <div className="rates">
-      {Object.keys(rates[mainCurrency]).map((key) => (
+      {currenciesNames.map((key) => (
         <p key={key}>
           {key}: {rates[mainCurrency][key]}
         </p>
@@ -57,8 +60,4 @@ const ExchangeRates = ({ rates }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return { rates: state.currency.rates };
-}
-
-export default connect(mapStateToProps)(ExchangeRates);
+export default ExchangeRates;

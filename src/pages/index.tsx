@@ -1,77 +1,92 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { CurrencyRatesInterface } from "src/store/types";
 
 import useCurencyRates from "src/store/useSelector/useCurency";
 
-function check(rates, el, i) {
+// 4 слова в ключевой фразе
+const PIECES_COUNT = 4;
+
+function check(rates: CurrencyRatesInterface, pieces: string[]) {
+  const value = {
+    firstCurrency: "",
+    secondCurrency: "",
+    sum: 0
+  };
+
   const currenciesNames = Object.keys(rates);
 
-  switch (i) {
-    case 0:
-      return Number(el) || undefined;
+  pieces.every((piece: string, index: number) => {
+    switch (index) {
+      case 0: {
+        value.sum = Number(piece) || undefined;
 
-    case 1:
-      return currenciesNames.indexOf(el.toUpperCase()) >= 0
-        ? el.toUpperCase()
-        : undefined;
-    case 2:
-      return el === "in" ? el : undefined;
+        return Boolean(value.sum);
+      }
 
-    case 3:
-      return currenciesNames.indexOf(el.toUpperCase()) >= 0
-        ? el.toUpperCase()
-        : undefined;
+      case 1: {
+        value.firstCurrency =
+          currenciesNames.indexOf(piece.toUpperCase()) >= 0
+            ? piece.toUpperCase()
+            : undefined;
 
-    default:
-      return;
-  }
+        return Boolean(value.firstCurrency);
+      }
+
+      case 2:
+        return piece === "in" ? true : false;
+
+      case 3: {
+        value.secondCurrency =
+          currenciesNames.indexOf(piece.toUpperCase()) >= 0
+            ? piece.toUpperCase()
+            : undefined;
+
+        return Boolean(value.secondCurrency);
+      }
+
+      default:
+        return;
+    }
+  });
+
+  return value;
 }
 
-const CurrencyExchange = ({  }) => {
-  const rates = useCurencyRates()
+const CurrencyExchange = ({}) => {
+  const rates = useCurencyRates();
 
   const [inputValue, setInputValue] = useState("");
-  const [result, setResult] = useState(undefined);
+  const [result, setResult] = useState<number>();
 
   const [error, setError] = useState(false);
 
-  const enter = (e) => {
-    if (e.keyCode === 13) {
-      const arr = inputValue.split(" ");
+  const handleChange = (e) => {
+    const targetValue = e.target.value;
 
-      if (arr.length !== 4) {
-        setError(true);
-        return;
-      }
+    setInputValue(targetValue);
 
-      const value = [];
+    const pieces = targetValue.split(" ");
 
-      for (let i = 0; i < 4; i++) {
-        value[i] = check(rates, arr[i], i);
-
-        if (!value[i]) {
-          setError(true);
-          return;
-        }
-      }
-
-      if (value[1] === value[3]) {
-        setResult(value[0]);
-      } else {
-        setResult(value[0] * rates[value[1]][value[3]]);
-      }
+    if (pieces.length !== PIECES_COUNT) {
+      return setError(true);
     }
+
+    const value = check(rates, pieces);
+
+    // если нет secondCurrency значит поле заполнено с ошибкой
+    if (!value.secondCurrency) {
+      return setError(true);
+    }
+
+    if (value.firstCurrency === value.secondCurrency) {
+      setResult(value.sum);
+    } else {
+      setResult(value.sum * rates[value.firstCurrency][value.secondCurrency]);
+    }
+
+    setError(false);
   };
-
-  useEffect(() => {
-    window.addEventListener("keydown", enter);
-
-    return () => {
-      window.removeEventListener("keydown", enter);
-    };
-  });
-
-  const handleChange = (e) => setInputValue(e.target.value);
 
   return (
     <div className="root">
