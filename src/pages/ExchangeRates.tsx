@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ExchangeRates = ({ rates }) => {
   const currenciesNames = Object.keys(rates);
@@ -9,8 +9,8 @@ const ExchangeRates = ({ rates }) => {
   useEffect(() => {
     const language = window.navigator
       ? window.navigator.language ||
-        window.navigator.systemLanguage ||
-        window.navigator.userLanguage
+        window.navigator["systemLanguage"] ||
+        window.navigator["userLanguage"]
       : "ru";
 
     if (language === "ru") {

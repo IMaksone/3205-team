@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+
+import useCurencyRates from "src/store/useSelector/useCurency";
 
 function check(rates, el, i) {
   const currenciesNames = Object.keys(rates);
@@ -26,7 +27,9 @@ function check(rates, el, i) {
   }
 }
 
-const CurrencyExchange = ({ rates }) => {
+const CurrencyExchange = ({  }) => {
+  const rates = useCurencyRates()
+
   const [inputValue, setInputValue] = useState("");
   const [result, setResult] = useState(undefined);
 
@@ -90,8 +93,4 @@ const CurrencyExchange = ({ rates }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return { rates: state.currency.rates };
-}
-
-export default connect(mapStateToProps)(CurrencyExchange);
+export default CurrencyExchange;

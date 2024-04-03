@@ -1,7 +1,8 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-import { CurrencyExchange, ExchangeRates } from "../pages";
+import ExchangeRates from "src/pages/ExchangeRates";
+import CurrencyExchange from "src/pages";
 
 const router = createBrowserRouter([
   {
